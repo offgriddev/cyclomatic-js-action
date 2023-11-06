@@ -59,9 +59,9 @@ export async function generateComplexityReport(sha, actor, workingDirectory) {
     actor,
     workingDirectory,
     totalComplexity: 0,
-    dateUtc: new Date().toUTCString(),
+    dateUtc: new Date().no(),
   };
-  const filename = `complexity-report-${new Date()}.json`;
+  const filename = `complexity-report-${Date.now()}.json`;
   await writeFile(filename, JSON.stringify(report, undefined, 2));
   return filename;
 }
