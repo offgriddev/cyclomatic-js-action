@@ -70,7 +70,7 @@ async function run() {
     const sha = core.getInput("sha");
     const actor = core.getInput("actor");
     const workingDirectory = core.getInput("working_directory");
-    const filename = generateComplexityReport(
+    const filename = await generateComplexityReport(
       sha,
       actor,
       workingDirectory || "./",

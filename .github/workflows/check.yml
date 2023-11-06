@@ -1,0 +1,27 @@
+name: Verify
+
+on:
+  pull_request:
+    branches: 
+      - main
+env:
+  NODE_VERSION: 20.x
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Publish Code Metrics
+        id: metrics
+        uses: ./
+        with:
+          github_token: ${{ github.token }}
+          event: ${{ toJson(github.event) }}
+
+      - name: Print Result
+        shell: bash
+        run: cat ${{ steps.metrics.outputs.export_filename }}
