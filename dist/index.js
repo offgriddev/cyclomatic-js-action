@@ -53694,7 +53694,7 @@ async function src_generateComplexityReport(
       complexities.push(complexity);
     });
 
-    return complexities.redurce((prev, cur) => prev + cur, 0);
+    return complexities.reduce((prev, cur) => prev + cur, 0);
   });
   const baseMetrics = {
     sha: lib_github.context.sha,
