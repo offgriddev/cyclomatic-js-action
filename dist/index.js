@@ -49313,7 +49313,7 @@ async function calculate_complexity_calculateComplexity(filename) {
 
 
 
-async function report_generator_getSourceFile(folder, includedType, excludedType) {
+async function getSourceFile(folder, includedType, excludedType) {
   let filePaths = []
   // get contents for folder
   const paths = await readdir(folder, {withFileTypes: true})
@@ -49325,7 +49325,7 @@ async function report_generator_getSourceFile(folder, includedType, excludedType
     if (path.isDirectory()) {
       if (path.name.match(/.*node_modules.*|.git|.github/)) continue
 
-      const recursePaths = await report_generator_getSourceFile(
+      const recursePaths = await getSourceFile(
         `${folder}/${path.name}`,
         includedType,
         excludedType
@@ -49347,7 +49347,7 @@ async function report_generator_getSourceFile(folder, includedType, excludedType
 async function generateComplexityReport(directory) {
   const include = /\.js$/
   const exclude = /\__mocks__|.test.js|Test.js/
-  const sourceFiles = await report_generator_getSourceFile(directory, include, exclude)
+  const sourceFiles = await getSourceFile(directory, include, exclude)
   const analyzedFiles = await Promise.all(
     sourceFiles.map(async file => {
       try {
@@ -49377,6 +49377,32 @@ async function generateComplexityReport(directory) {
 
 
 
+async function src_getSourceFile(folder, includedType, excludedType) {
+  let filePaths = [];
+  // get contents for folder
+  const paths = await readdir(folder, { withFileTypes: true });
+  // check if item is a directory
+
+  for (const path of paths) {
+    const filePath = `${folder}/${path.name}`;
+
+    if (path.isDirectory()) {
+      if (path.name.match(/.*node_modules.*|.git|.github/)) continue;
+
+      const recursePaths = await src_getSourceFile(
+        `${folder}/${path.name}`,
+        includedType,
+        excludedType,
+      );
+      filePaths = filePaths.concat(recursePaths);
+    } else {
+      if (filePath.match(includedType) && !filePath.match(excludedType))
+        filePaths.push(filePath);
+    }
+  }
+  return filePaths;
+}
+
 /**
  * This report leverages calculateComplexity to produce a complexity report recursively for an entire
  * project directory
@@ -49385,7 +49411,7 @@ async function generateComplexityReport(directory) {
 async function src_generateComplexityReport(sha, actor, workingDirectory) {
   const include = /\.js$/;
   const exclude = /\__mocks__|.test.js|Test.js/;
-  const sourceFiles = await getSourceFile(workingDirectory, include, exclude);
+  const sourceFiles = await src_getSourceFile(workingDirectory, include, exclude);
   const analyzedFiles = await Promise.all(
     sourceFiles.map(async (file) => {
       try {

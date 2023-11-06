@@ -1,6 +1,32 @@
 import * as core from "@actions/core";
 import { calculateComplexity } from "cyclomatic-js";
 
+async function getSourceFile(folder, includedType, excludedType) {
+  let filePaths = [];
+  // get contents for folder
+  const paths = await readdir(folder, { withFileTypes: true });
+  // check if item is a directory
+
+  for (const path of paths) {
+    const filePath = `${folder}/${path.name}`;
+
+    if (path.isDirectory()) {
+      if (path.name.match(/.*node_modules.*|.git|.github/)) continue;
+
+      const recursePaths = await getSourceFile(
+        `${folder}/${path.name}`,
+        includedType,
+        excludedType,
+      );
+      filePaths = filePaths.concat(recursePaths);
+    } else {
+      if (filePath.match(includedType) && !filePath.match(excludedType))
+        filePaths.push(filePath);
+    }
+  }
+  return filePaths;
+}
+
 /**
  * This report leverages calculateComplexity to produce a complexity report recursively for an entire
  * project directory
