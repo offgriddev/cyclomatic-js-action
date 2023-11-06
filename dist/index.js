@@ -53738,6 +53738,7 @@ async function run() {
     core.setOutput("export_filename", filename);
   } catch (error) {
     core.setFailed(error.message);
+    core.setFailed(error.stack);
   }
 }
 
