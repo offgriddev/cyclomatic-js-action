@@ -53665,21 +53665,23 @@ async function src_generateComplexityReport(
   const include = new RegExp(inc);
   const exclude = new RegExp(exc);
   const sourceFiles = await src_getSourceFile(workingDirectory, include, exclude);
-  const analyzedFiles = await Promise.all(
-    sourceFiles.map(async (file) => {
-      try {
-        return {
-          file,
-          report: await calculate_complexity_calculateComplexity(file),
-        };
-      } catch (e) {
-        return {
-          file,
-          error:
-            "failed to generate report for file, possible syntactical issue",
-        };
-      }
-    }),
+  const analyzedFiles = (
+    await Promise.all(
+      sourceFiles.map(async (file) => {
+        try {
+          return {
+            file,
+            report: await calculate_complexity_calculateComplexity(file),
+          };
+        } catch (e) {
+          return {
+            file,
+            error:
+              "failed to generate report for file, possible syntactical issue",
+          };
+        }
+      }),
+    )
   ).filter((file) => Object.keys(file.report).length > 0);
   core.info(JSON.stringify(analyzedFiles, undefined, 2));
   const date = new Date().toISOString();
