@@ -99,7 +99,6 @@ export async function generateComplexityReport(
 
       return complexities.reduce((prev, cur) => prev + cur, 0);
     })
-    .flatMap()
     .reduce((prev, cur) => prev + cur, 0);
   const baseMetrics = {
     sha: context.sha,
