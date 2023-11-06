@@ -49413,7 +49413,7 @@ async function src_generateComplexityReport(sha, actor, workingDirectory) {
   const include = /\.js$/;
   const exclude = /\__mocks__|.test.js|Test.js/;
   const sourceFiles = await src_getSourceFile(workingDirectory, include, exclude);
-  core.debug(sourceFiles);
+  core.info(sourceFiles);
   const analyzedFiles = await Promise.all(
     sourceFiles.map(async (file) => {
       try {
@@ -49453,7 +49453,7 @@ async function run() {
       workingDirectory || "./",
     );
 
-    core.debug(filename);
+    core.info(filename);
     core.setOutput("export_filename", filename);
   } catch (error) {
     core.setFailed(error.message);
