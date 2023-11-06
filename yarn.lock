@@ -23,6 +23,11 @@
   resolved "https://registry.yarnpkg.com/@fastify/busboy/-/busboy-2.0.0.tgz#f22824caff3ae506b18207bad4126dbc6ccdb6b8"
   integrity sha512-JUFJad5lv7jxj926GPgymrWQxxjPYuJNiNjNMzqT+HiuP6Vl3dk5xzG+8sTX96np0ZAluvaMzPsjhHZ5rNuNQQ==
 
+"@vercel/ncc@^0.38.1":
+  version "0.38.1"
+  resolved "https://registry.yarnpkg.com/@vercel/ncc/-/ncc-0.38.1.tgz#13f08738111e1d9e8a22fd6141f3590e54d9a60e"
+  integrity sha512-IBBb+iI2NLu4VQn3Vwldyi2QwaXt5+hTyh58ggAMoCGE6DJmPvwL3KPBWcJl1m9LYPChBLE980Jw+CS4Wokqxw==
+
 abstract-syntax-tree@^2.21.1:
   version "2.21.1"
   resolved "https://registry.yarnpkg.com/abstract-syntax-tree/-/abstract-syntax-tree-2.21.1.tgz#7d1cdbc651c9a4f57240b9665e151fd32c7dc830"
@@ -70,6 +75,11 @@ meriyah@^4.3.7:
   version "4.3.8"
   resolved "https://registry.yarnpkg.com/meriyah/-/meriyah-4.3.8.tgz#8766d05dd89f8a06095bd11260ce98da20f74efb"
   integrity sha512-b1bddpQZK3FVr/x6KISsfNQdS9jVNgVuFDRi7I9AJbYVggdcA6ij9idboD0aW5ZYELsDMOubi58SDfsW81VakA==
+
+prettier@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.0.3.tgz#432a51f7ba422d1469096c0fdc28e235db8f9643"
+  integrity sha512-L/4pUDMxcNa8R/EthV08Zt42WBO4h1rarVtK0K+QJG0X187OLo7l699jWw0GKuwzkPQ//jMFA/8Xm6Fh3J/DAg==
 
 pure-conditions@^1.2.1:
   version "1.2.1"

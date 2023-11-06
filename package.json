@@ -6,8 +6,20 @@
   "repository": "git@github.com:offgriddev/cyclomatic-js-action.git",
   "author": "Jesse Anderson <jeryanders@gmail.com>",
   "license": "MIT",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "bundle": "npm run format:write && npm run package",
+    "format:write": "prettier --write **/*.js",
+    "package": "ncc build src/index.js --license licenses.txt"
+  },
   "dependencies": {
     "@actions/core": "^1.10.1",
     "cyclomatic-js": "^1.1.4"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.1",
+    "prettier": "^3.0.3"
   }
 }
