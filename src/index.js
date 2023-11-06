@@ -70,7 +70,11 @@ async function run() {
     const sha = core.getInput("sha");
     const actor = core.getInput("actor");
     const workingDirectory = core.getInput("working_directory");
-    const filename = generateComplexityReport(sha, actor, workingDirectory);
+    const filename = generateComplexityReport(
+      sha,
+      actor,
+      workingDirectory || "./",
+    );
 
     core.setOutput("export_filename", filename);
   } catch (error) {
