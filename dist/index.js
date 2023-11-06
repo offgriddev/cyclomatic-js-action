@@ -53685,6 +53685,7 @@ async function src_generateComplexityReport(
   const reports = analyzedFiles.map((file) => file.report);
   const totalComplexity = reports
     .map((r) => {
+      if (!r) return 0;
       const keys = Object.keys(r);
       if (keys.length === 0) return 0;
 
