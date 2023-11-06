@@ -53683,7 +53683,6 @@ async function src_generateComplexityReport(
       }),
     )
   ).filter((file) => Object.keys(file.report).length > 0);
-  core.info(JSON.stringify(analyzedFiles, undefined, 2));
   const date = new Date().toISOString();
   const reports = analyzedFiles.map((file) => file.report);
 
