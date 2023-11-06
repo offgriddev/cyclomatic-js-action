@@ -49422,6 +49422,7 @@ async function src_generateComplexityReport(sha, actor, workingDirectory) {
           report: await calculate_complexity_calculateComplexity(file),
         };
       } catch (e) {
+        core.error("Error calculating complexity", e);
         return {
           file,
           error:

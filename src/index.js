@@ -46,6 +46,7 @@ export async function generateComplexityReport(sha, actor, workingDirectory) {
           report: await calculateComplexity(file),
         };
       } catch (e) {
+        core.error("Error calculating complexity", e);
         return {
           file,
           error:
