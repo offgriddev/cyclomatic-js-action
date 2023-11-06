@@ -1,4 +1,5 @@
 import * as core from "@actions/core";
+import { readdir, writeFile } from "fs/promises";
 import { calculateComplexity } from "cyclomatic-js";
 
 async function getSourceFile(folder, includedType, excludedType) {

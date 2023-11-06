@@ -49377,10 +49377,11 @@ async function generateComplexityReport(directory) {
 
 
 
+
 async function src_getSourceFile(folder, includedType, excludedType) {
   let filePaths = [];
   // get contents for folder
-  const paths = await readdir(folder, { withFileTypes: true });
+  const paths = await (0,promises_namespaceObject.readdir)(folder, { withFileTypes: true });
   // check if item is a directory
 
   for (const path of paths) {
@@ -49436,7 +49437,7 @@ async function src_generateComplexityReport(sha, actor, workingDirectory) {
     dateUtc: new Date().toUTCString(),
   };
   const filename = `complexity-report-${new Date()}.json`;
-  await writeFile(filename, JSON.stringify(report, undefined, 2));
+  await (0,promises_namespaceObject.writeFile)(filename, JSON.stringify(report, undefined, 2));
   return filename;
 }
 
