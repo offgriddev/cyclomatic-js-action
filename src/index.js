@@ -1,6 +1,6 @@
 import * as core from "@actions/core";
 import "./require-polyfill.js";
-import { readdir, writeFile } from "fs/promises";
+import { readdir, writeFile, mkdir } from "fs/promises";
 import { calculateComplexity } from "cyclomatic-js";
 
 import { context, getOctokit } from "@actions/github";
@@ -83,7 +83,7 @@ export async function generateComplexityReport(
       }
     }),
   );
-  const date = Date.now();
+  const date = new Date().toISOString();
   const reports = analyzedFiles.map((file) => file.report);
   const totalComplexity = reports
     .map((r) => {
@@ -121,7 +121,9 @@ export async function generateComplexityReport(
         ...baseMetrics,
       }
     : { ...prBase, ...baseMetrics };
-  const filename = `complexity-report-${date}.json`;
+  const folder = "complexity-assessment";
+  const filename = `${folder}/${context.sha}.json`;
+  await mkdir(folder);
   await writeFile(filename, JSON.stringify(analytics, undefined, 2));
   return filename;
 }

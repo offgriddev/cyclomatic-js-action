@@ -53681,7 +53681,7 @@ async function src_generateComplexityReport(
       }
     }),
   );
-  const date = Date.now();
+  const date = new Date().toISOString();
   const reports = analyzedFiles.map((file) => file.report);
   const totalComplexity = reports
     .map((r) => {
@@ -53719,7 +53719,9 @@ async function src_generateComplexityReport(
         ...baseMetrics,
       }
     : { ...prBase, ...baseMetrics };
-  const filename = `complexity-report-${date}.json`;
+  const folder = "complexity-assessment";
+  const filename = `${folder}/${lib_github.context.sha}.json`;
+  await (0,promises_namespaceObject.mkdir)(folder);
   await (0,promises_namespaceObject.writeFile)(filename, JSON.stringify(analytics, undefined, 2));
   return filename;
 }
