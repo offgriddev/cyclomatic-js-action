@@ -104,7 +104,6 @@ export async function generateComplexityReport(
     sha: context.sha,
     ref: context.ref,
     repository: context.repo,
-    workingDirectory,
     files: analyzedFiles,
     totalComplexity,
     dateUtc: date,

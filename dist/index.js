@@ -53702,7 +53702,6 @@ async function src_generateComplexityReport(
     sha: lib_github.context.sha,
     ref: lib_github.context.ref,
     repository: lib_github.context.repo,
-    workingDirectory,
     files: analyzedFiles,
     totalComplexity,
     dateUtc: date,
