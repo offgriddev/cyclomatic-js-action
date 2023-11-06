@@ -1,4 +1,5 @@
 import * as core from "@actions/core";
+import { context } from "@actions/github";
 import { readdir, writeFile } from "fs/promises";
 import { calculateComplexity } from "cyclomatic-js";
 
