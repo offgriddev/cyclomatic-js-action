@@ -53662,12 +53662,9 @@ async function src_generateComplexityReport(
 ) {
   const inc = core.getInput("includedFileTypes");
   const exc = core.getInput("excludedFileTypes");
-  core.info(inc);
-  core.info(exc);
   const include = new RegExp(inc);
   const exclude = new RegExp(exc);
   const sourceFiles = await src_getSourceFile(workingDirectory, include, exclude);
-  core.info(sourceFiles);
   const analyzedFiles = await Promise.all(
     sourceFiles.map(async (file) => {
       try {
@@ -53686,13 +53683,26 @@ async function src_generateComplexityReport(
     }),
   );
   const date = Date.now();
+  const reports = analyzedFiles.map((file) => file.report);
+  const totalComplexity = reports.map((r) => {
+    const keys = Object.keys(r);
+    if (keys.length === 0) return 0;
+
+    const complexities = [];
+    keys.forEach((key) => {
+      const complexity = r[key];
+      complexities.push(complexity);
+    });
+
+    return complexities.redurce((prev, cur) => prev + cur, 0);
+  });
   const baseMetrics = {
     sha: lib_github.context.sha,
     ref: lib_github.context.ref,
     repository: lib_github.context.repo,
     workingDirectory,
-    files: analyzedFiles,
-    totalComplexity: 0,
+    files: analyzedFiles.map((file) => file.report),
+    totalComplexity,
     dateUtc: date,
   };
   const prBase = {
