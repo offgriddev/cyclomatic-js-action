@@ -2,6 +2,7 @@
   "name": "cyclomatic-js-action",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "repository": "git@github.com:offgriddev/cyclomatic-js-action.git",
   "author": "Jesse Anderson <jeryanders@gmail.com>",
   "license": "MIT",
