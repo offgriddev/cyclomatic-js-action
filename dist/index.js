@@ -53409,6 +53409,17 @@ __nccwpck_require__.d(__webpack_exports__, {
 
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
 var core = __nccwpck_require__(2186);
+;// CONCATENATED MODULE: external "node:module"
+const external_node_module_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:module");
+;// CONCATENATED MODULE: external "node:url"
+const external_node_url_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:url");
+;// CONCATENATED MODULE: ./src/require-polyfill.js
+
+
+
+const require_polyfill_filename = external_node_url_namespaceObject.fileURLToPath(import.meta.url);
+globalThis.require = (0,external_node_module_namespaceObject.createRequire)(require_polyfill_filename);
+
 ;// CONCATENATED MODULE: external "fs/promises"
 const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs/promises");
 // EXTERNAL MODULE: ./node_modules/abstract-syntax-tree/index.js
@@ -53595,6 +53606,7 @@ var lib_github = __nccwpck_require__(2867);
 // EXTERNAL MODULE: ./node_modules/@vercel/ncc/dist/ncc/@@notfound.js?../cmds/lib/logger
 var logger = __nccwpck_require__(7370);
 ;// CONCATENATED MODULE: ./src/index.js
+
 
 
 

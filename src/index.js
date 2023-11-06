@@ -1,4 +1,5 @@
 import * as core from "@actions/core";
+import "./require-polyfill.js";
 import { readdir, writeFile } from "fs/promises";
 import { calculateComplexity } from "cyclomatic-js";
 
