@@ -53660,8 +53660,12 @@ async function src_generateComplexityReport(
   githubToken,
   workingDirectory,
 ) {
-  const include = new RegExp(core.getInput("includedFileTypes"));
-  const exclude = new RegExp(core.getInput("excludedFileTypes"));
+  const inc = core.getInput("includedFileTypes");
+  const exc = core.getInput("excludedFileTypes");
+  core.info(inc);
+  core.info(exc);
+  const include = new RegExp(inc);
+  const exclude = new RegExp(exc);
   const sourceFiles = await src_getSourceFile(workingDirectory, include, exclude);
   core.info(sourceFiles);
   const analyzedFiles = await Promise.all(
