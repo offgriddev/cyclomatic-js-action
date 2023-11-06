@@ -53703,7 +53703,7 @@ async function src_generateComplexityReport(
     ref: lib_github.context.ref,
     repository: lib_github.context.repo,
     workingDirectory,
-    files: analyzedFiles.map((file) => file.report),
+    files: analyzedFiles,
     totalComplexity,
     dateUtc: date,
   };

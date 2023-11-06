@@ -105,7 +105,7 @@ export async function generateComplexityReport(
     ref: context.ref,
     repository: context.repo,
     workingDirectory,
-    files: analyzedFiles.map((file) => file.report),
+    files: analyzedFiles,
     totalComplexity,
     dateUtc: date,
   };
