@@ -53684,18 +53684,21 @@ async function src_generateComplexityReport(
   );
   const date = Date.now();
   const reports = analyzedFiles.map((file) => file.report);
-  const totalComplexity = reports.map((r) => {
-    const keys = Object.keys(r);
-    if (keys.length === 0) return 0;
+  const totalComplexity = reports
+    .map((r) => {
+      const keys = Object.keys(r);
+      if (keys.length === 0) return 0;
 
-    const complexities = [];
-    keys.forEach((key) => {
-      const complexity = r[key];
-      complexities.push(complexity);
-    });
+      const complexities = [];
+      keys.forEach((key) => {
+        const complexity = r[key];
+        complexities.push(complexity);
+      });
 
-    return complexities.reduce((prev, cur) => prev + cur, 0);
-  });
+      return complexities.reduce((prev, cur) => prev + cur, 0);
+    })
+    .flatMap()
+    .reduce((prev, cur) => prev + cur, 0);
   const baseMetrics = {
     sha: lib_github.context.sha,
     ref: lib_github.context.ref,
