@@ -84,7 +84,9 @@ export async function generateComplexityReport(
         }
       }),
     )
-  ).filter((file) => Object.keys(file.report).length > 0);
+  )
+    .filter((file) => !!file.report)
+    .filter((file) => Object.keys(file.report).length > 0);
   const date = new Date().toISOString();
   const reports = analyzedFiles.map((file) => file.report);
 
