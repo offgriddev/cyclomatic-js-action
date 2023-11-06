@@ -53655,7 +53655,11 @@ async function src_getSourceFile(folder, includedType, excludedType) {
  * project directory
  * @param {string} directory a given directory to analyze
  */
-async function src_generateComplexityReport(event, workingDirectory) {
+async function src_generateComplexityReport(
+  event,
+  githubToken,
+  workingDirectory,
+) {
   const include = new RegExp(core.getInput("includedFileTypes"));
   const exclude = new RegExp(core.getInput("excludedFileTypes"));
   const sourceFiles = await src_getSourceFile(workingDirectory, include, exclude);
@@ -53708,9 +53712,11 @@ async function src_generateComplexityReport(event, workingDirectory) {
 async function run() {
   try {
     const workingDirectory = core.getInput("working_directory");
+    const githubToken = core.getInput("github_token");
     const event = core.getInput("event");
     const filename = await src_generateComplexityReport(
       event,
+      githubToken,
       workingDirectory || "./",
     );
 

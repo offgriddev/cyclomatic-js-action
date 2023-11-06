@@ -57,7 +57,11 @@ async function getSourceFile(folder, includedType, excludedType) {
  * project directory
  * @param {string} directory a given directory to analyze
  */
-export async function generateComplexityReport(event, workingDirectory) {
+export async function generateComplexityReport(
+  event,
+  githubToken,
+  workingDirectory,
+) {
   const include = new RegExp(core.getInput("includedFileTypes"));
   const exclude = new RegExp(core.getInput("excludedFileTypes"));
   const sourceFiles = await getSourceFile(workingDirectory, include, exclude);
@@ -110,9 +114,11 @@ export async function generateComplexityReport(event, workingDirectory) {
 async function run() {
   try {
     const workingDirectory = core.getInput("working_directory");
+    const githubToken = core.getInput("github_token");
     const event = core.getInput("event");
     const filename = await generateComplexityReport(
       event,
+      githubToken,
       workingDirectory || "./",
     );
 
