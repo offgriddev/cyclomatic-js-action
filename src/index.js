@@ -86,7 +86,10 @@ export async function generateComplexityReport(
   const date = new Date().toISOString();
   const reports = analyzedFiles
     .map((file) => file.report)
-    .filter((file) => Object.keys(file.report).length > 0);
+    .filter((file) => {
+      console.log(file);
+      return Object.keys(file.report).length > 0;
+    });
   const totalComplexity = reports
     .map((r) => {
       if (!r) return 0;
