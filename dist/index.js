@@ -53647,7 +53647,6 @@ async function src_generateComplexityReport(event, workingDirectory) {
     sha: github.context.sha,
     ref: github.context.ref,
     repository: github.context.repo,
-    actor,
     workingDirectory,
     files: analyzedFiles,
     totalComplexity: 0,

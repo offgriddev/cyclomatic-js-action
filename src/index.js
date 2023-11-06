@@ -61,7 +61,6 @@ export async function generateComplexityReport(event, workingDirectory) {
     sha: context.sha,
     ref: context.ref,
     repository: context.repo,
-    actor,
     workingDirectory,
     files: analyzedFiles,
     totalComplexity: 0,
