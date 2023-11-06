@@ -53683,8 +53683,8 @@ async function src_generateComplexityReport(
   );
   const date = new Date().toISOString();
   const reports = analyzedFiles
-    .filter((file) => Object.keys(file.report) > 0)
-    .map((file) => file.report);
+    .map((file) => file.report)
+    .filter((file) => Object.keys(file.report).length > 0);
   const totalComplexity = reports
     .map((r) => {
       if (!r) return 0;
