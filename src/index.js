@@ -75,8 +75,6 @@ export async function generateComplexityReport(
           report: await calculateComplexity(file),
         };
       } catch (e) {
-        core.error(e.message);
-        core.error(e.stack);
         return {
           file,
           error:

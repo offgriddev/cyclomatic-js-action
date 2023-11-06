@@ -53673,8 +53673,6 @@ async function src_generateComplexityReport(
           report: await calculate_complexity_calculateComplexity(file),
         };
       } catch (e) {
-        core.error(e.message);
-        core.error(e.stack);
         return {
           file,
           error:
