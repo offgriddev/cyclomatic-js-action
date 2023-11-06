@@ -1,7 +1,30 @@
 import * as core from "@actions/core";
-import { context } from "@actions/github";
 import { readdir, writeFile } from "fs/promises";
 import { calculateComplexity } from "cyclomatic-js";
+
+import { context, getOctokit } from "@actions/github";
+import { logger } from "../cmds/lib/logger";
+
+export async function getPushDetails(githubToken, event) {
+  if (!event.commits) return undefined;
+
+  const github = getOctokit(githubToken, context.repo);
+  // push always originates from a PR
+  const prs = await github.rest.pulls.list({
+    ...context.repo,
+    state: "closed",
+  });
+  for (const commit of event.commits) {
+    const found = prs.data.find((pr) => pr.merge_commit_sha === commit.id);
+    if (found)
+      return {
+        head: found.head.ref,
+        actor: commit.author.username,
+        actorName: commit.author.name,
+      };
+  }
+  logger.info("Found no PRs related to the commits in the PushEvent");
+}
 
 async function getSourceFile(folder, includedType, excludedType) {
   let filePaths = [];

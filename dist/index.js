@@ -1048,7 +1048,7 @@ exports.Context = Context;
 
 /***/ }),
 
-/***/ 5438:
+/***/ 2867:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -16367,7 +16367,7 @@ const isNegative = __nccwpck_require__(4041)
 const isFinite = __nccwpck_require__(1510)
 const isInfinite = __nccwpck_require__(8013)
 const isPresent = __nccwpck_require__(87)
-const isUndefined = __nccwpck_require__(4981)
+const isUndefined = __nccwpck_require__(5438)
 const isNull = __nccwpck_require__(8954)
 const isEven = __nccwpck_require__(4496)
 const isOdd = __nccwpck_require__(3054)
@@ -17354,7 +17354,7 @@ module.exports = isTruthy
 
 /***/ }),
 
-/***/ 4981:
+/***/ 5438:
 /***/ ((module) => {
 
 function isUndefined (value) {
@@ -43582,6 +43582,14 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 7370:
+/***/ ((module) => {
+
+module.exports = eval("require")("../cmds/lib/logger");
+
+
+/***/ }),
+
 /***/ 2735:
 /***/ ((module) => {
 
@@ -53395,13 +53403,12 @@ var __webpack_exports__ = {};
 
 // EXPORTS
 __nccwpck_require__.d(__webpack_exports__, {
-  "j": () => (/* binding */ src_generateComplexityReport)
+  "j": () => (/* binding */ src_generateComplexityReport),
+  "S": () => (/* binding */ getPushDetails)
 });
 
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
 var core = __nccwpck_require__(2186);
-// EXTERNAL MODULE: ./node_modules/@actions/github/lib/github.js
-var github = __nccwpck_require__(5438);
 ;// CONCATENATED MODULE: external "fs/promises"
 const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs/promises");
 // EXTERNAL MODULE: ./node_modules/abstract-syntax-tree/index.js
@@ -53583,11 +53590,38 @@ async function generateComplexityReport(directory) {
 
 
 
+// EXTERNAL MODULE: ./node_modules/@actions/github/lib/github.js
+var lib_github = __nccwpck_require__(2867);
+// EXTERNAL MODULE: ./node_modules/@vercel/ncc/dist/ncc/@@notfound.js?../cmds/lib/logger
+var logger = __nccwpck_require__(7370);
 ;// CONCATENATED MODULE: ./src/index.js
 
 
 
 
+
+
+
+async function getPushDetails(githubToken, event) {
+  if (!event.commits) return undefined;
+
+  const github = (0,lib_github.getOctokit)(githubToken, lib_github.context.repo);
+  // push always originates from a PR
+  const prs = await github.rest.pulls.list({
+    ...lib_github.context.repo,
+    state: "closed",
+  });
+  for (const commit of event.commits) {
+    const found = prs.data.find((pr) => pr.merge_commit_sha === commit.id);
+    if (found)
+      return {
+        head: found.head.ref,
+        actor: commit.author.username,
+        actorName: commit.author.name,
+      };
+  }
+  logger.logger.info("Found no PRs related to the commits in the PushEvent");
+}
 
 async function src_getSourceFile(folder, includedType, excludedType) {
   let filePaths = [];
@@ -53644,17 +53678,17 @@ async function src_generateComplexityReport(event, workingDirectory) {
   );
   const date = Date.now();
   const baseMetrics = {
-    sha: github.context.sha,
-    ref: github.context.ref,
-    repository: github.context.repo,
+    sha: lib_github.context.sha,
+    ref: lib_github.context.ref,
+    repository: lib_github.context.repo,
     workingDirectory,
     files: analyzedFiles,
     totalComplexity: 0,
     dateUtc: date,
   };
   const prBase = {
-    head: github.context.payload.pull_request?.head.ref,
-    actor: github.context.actor,
+    head: lib_github.context.payload.pull_request?.head.ref,
+    actor: lib_github.context.actor,
   };
   const pushBase = await getPushDetails(githubToken, event);
   // pull_request will be empty on a push
@@ -53690,4 +53724,5 @@ run();
 })();
 
 var __webpack_exports__generateComplexityReport = __webpack_exports__.j;
-export { __webpack_exports__generateComplexityReport as generateComplexityReport };
+var __webpack_exports__getPushDetails = __webpack_exports__.S;
+export { __webpack_exports__generateComplexityReport as generateComplexityReport, __webpack_exports__getPushDetails as getPushDetails };
