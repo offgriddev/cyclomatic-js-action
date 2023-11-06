@@ -4,7 +4,6 @@ import { readdir, writeFile } from "fs/promises";
 import { calculateComplexity } from "cyclomatic-js";
 
 import { context, getOctokit } from "@actions/github";
-import { logger } from "../cmds/lib/logger";
 
 export async function getPushDetails(githubToken, event) {
   if (!event.commits) return undefined;
@@ -24,7 +23,7 @@ export async function getPushDetails(githubToken, event) {
         actorName: commit.author.name,
       };
   }
-  logger.info("Found no PRs related to the commits in the PushEvent");
+  core.info("Found no PRs related to the commits in the PushEvent");
 }
 
 async function getSourceFile(folder, includedType, excludedType) {

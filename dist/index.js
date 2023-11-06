@@ -43582,14 +43582,6 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 7370:
-/***/ ((module) => {
-
-module.exports = eval("require")("../cmds/lib/logger");
-
-
-/***/ }),
-
 /***/ 2735:
 /***/ ((module) => {
 
@@ -53603,10 +53595,7 @@ async function generateComplexityReport(directory) {
 
 // EXTERNAL MODULE: ./node_modules/@actions/github/lib/github.js
 var lib_github = __nccwpck_require__(2867);
-// EXTERNAL MODULE: ./node_modules/@vercel/ncc/dist/ncc/@@notfound.js?../cmds/lib/logger
-var logger = __nccwpck_require__(7370);
 ;// CONCATENATED MODULE: ./src/index.js
-
 
 
 
@@ -53632,7 +53621,7 @@ async function getPushDetails(githubToken, event) {
         actorName: commit.author.name,
       };
   }
-  logger.logger.info("Found no PRs related to the commits in the PushEvent");
+  core.info("Found no PRs related to the commits in the PushEvent");
 }
 
 async function src_getSourceFile(folder, includedType, excludedType) {
