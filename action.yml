@@ -8,6 +8,10 @@ inputs:
     description: target directory for analysis
   event:
     description: this event
+  includedFileTypes:
+    description: RegExp pattern for files to include in report
+  excludedFileTypes:
+    description: RegExp pattern for files to exclude from report
 runs:
   using: 'node20'
   main: 'dist/index.js'

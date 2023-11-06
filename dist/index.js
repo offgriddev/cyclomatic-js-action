@@ -49410,8 +49410,8 @@ async function src_getSourceFile(folder, includedType, excludedType) {
  * @param {string} directory a given directory to analyze
  */
 async function src_generateComplexityReport(sha, actor, workingDirectory) {
-  const include = /\.js$/;
-  const exclude = /\__mocks__|.test.js|Test.js/;
+  const include = new RegExp(core.getInput("includedFileTypes"));
+  const exclude = new RegExp(core.getInput("excludedFileTypes"));
   const sourceFiles = await src_getSourceFile(workingDirectory, include, exclude);
   core.info(sourceFiles);
   const analyzedFiles = await Promise.all(
@@ -49448,8 +49448,6 @@ async function src_generateComplexityReport(sha, actor, workingDirectory) {
 
 async function run() {
   try {
-    const sha = core.getInput("sha");
-    const actor = core.getInput("actor");
     const workingDirectory = core.getInput("working_directory");
     const filename = await src_generateComplexityReport(
       sha,
