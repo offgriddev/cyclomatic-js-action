@@ -54,14 +54,17 @@ export async function generateComplexityReport(sha, actor, workingDirectory) {
       }
     }),
   );
+  const date = Date.now()
   const report = {
     sha,
     actor,
     workingDirectory,
+    files: analyzedFiles,
     totalComplexity: 0,
-    dateUtc: new Date().no(),
+    dateUtc: date,
   };
-  const filename = `complexity-report-${Date.now()}.json`;
+  core.info(report)
+  const filename = `complexity-report-${date}.json`;
   await writeFile(filename, JSON.stringify(report, undefined, 2));
   return filename;
 }
