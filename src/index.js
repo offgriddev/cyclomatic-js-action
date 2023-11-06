@@ -33,7 +33,7 @@ async function getSourceFile(folder, includedType, excludedType) {
  * project directory
  * @param {string} directory a given directory to analyze
  */
-export async function generateComplexityReport(sha, actor, workingDirectory) {
+export async function generateComplexityReport(event, workingDirectory) {
   const include = new RegExp(core.getInput("includedFileTypes"));
   const exclude = new RegExp(core.getInput("excludedFileTypes"));
   const sourceFiles = await getSourceFile(workingDirectory, include, exclude);
@@ -56,30 +56,43 @@ export async function generateComplexityReport(sha, actor, workingDirectory) {
     }),
   );
   const date = Date.now();
-  const report = {
-    sha,
+  const baseMetrics = {
+    sha: context.sha,
+    ref: context.ref,
+    repository: context.repo,
     actor,
     workingDirectory,
     files: analyzedFiles,
     totalComplexity: 0,
     dateUtc: date,
   };
-  core.info(JSON.stringify(report, undefined, 2));
+  const prBase = {
+    head: context.payload.pull_request?.head.ref,
+    actor: context.actor,
+  };
+  const pushBase = await getPushDetails(githubToken, event);
+  // pull_request will be empty on a push
+  const isPushRequest = !!pushBase;
+  const analytics = isPushRequest
+    ? {
+        ...pushBase,
+        ...baseMetrics,
+      }
+    : { ...prBase, ...baseMetrics };
   const filename = `complexity-report-${date}.json`;
-  await writeFile(filename, JSON.stringify(report, undefined, 2));
+  await writeFile(filename, JSON.stringify(analytics, undefined, 2));
   return filename;
 }
 
 async function run() {
   try {
     const workingDirectory = core.getInput("working_directory");
+    const event = core.getInput("event");
     const filename = await generateComplexityReport(
-      sha,
-      actor,
+      event,
       workingDirectory || "./",
     );
 
-    core.info(filename);
     core.setOutput("export_filename", filename);
   } catch (error) {
     core.setFailed(error.message);
