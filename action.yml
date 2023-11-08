@@ -12,6 +12,9 @@ inputs:
     description: RegExp pattern for files to include in report
   excludedFileTypes:
     description: RegExp pattern for files to exclude from report
+outputs:
+  export_filename:
+    description: the path to the report produced
 runs:
   using: 'node20'
   main: 'dist/index.js'
