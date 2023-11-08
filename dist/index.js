@@ -53725,7 +53725,7 @@ async function src_generateComplexityReport(
       }
     : { ...prBase, ...baseMetrics };
   const folder = "complexity-assessment";
-  const filename = `${folder}/${lib_github.context.sha}.json`;
+  const filename = `${folder}/${lib_github.context.sha}-complexity.json`;
   await (0,promises_namespaceObject.mkdir)(folder);
   await (0,promises_namespaceObject.writeFile)(filename, JSON.stringify(analytics, undefined, 2));
   return filename;
