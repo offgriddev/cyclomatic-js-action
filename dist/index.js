@@ -53639,7 +53639,7 @@ async function printReport(report) {
       ],
       [file.file, maxComplexity, totalComplexity],
     ]);
-    summary.addHeading(`Functions: ${funcName}`, 4);
+    summary.addHeading("Functions", 4);
     summary.addTable([
       [
         { data: "Name", header: true },
