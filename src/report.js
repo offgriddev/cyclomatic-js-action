@@ -20,10 +20,11 @@ export async function printReport(report) {
     );
     const maxComplexity = Math.max(...mappedKeys);
     const totalComplexity = mappedKeys.reduce((prev, cur) => +prev + +cur);
-    summary.addRaw(`Max Complexity: ${maxComplexity}`);
-    summary.addBreak();
-    summary.addRaw(`Total File Complexity: ${totalComplexity}`);
-    summary.addBreak();
+    summary
+      .addRaw(`Max Complexity: ${maxComplexity}`)
+      .addEOL()
+      .addRaw(`Total File Complexity: ${totalComplexity}`)
+      .addEOL();
     Object.keys(file.report).forEach((funcName) => {
       summary.addHeading(`Function: ${funcName}`, 4);
       summary.addRaw(`Total Function Complexity: ${file.report[funcName]}`);
