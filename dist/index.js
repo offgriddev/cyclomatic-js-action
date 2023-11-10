@@ -53635,18 +53635,20 @@ async function printReport(report) {
       [
         { data: "File", header: true },
         { data: "Max", header: true },
-        { data: "Total" },
+        { data: "Total", header: true },
       ],
-      [file.file, maxComplexity, totalComplexity],
+      [file.file, maxComplexity.toString(), totalComplexity.toString()],
     ]);
     summary.addHeading("Functions", 4);
-    summary.addTable([
+    const functionRows = [
       [
         { data: "Name", header: true },
         { data: "Complexity", header: true },
       ],
-      Object.keys(file.report).map((func) => [func, file.report[func]]),
-    ]);
+    ];
+    Object.keys(file.report).forEach((func) =>
+      functionRows.push([func, file.report[func].toString()]),
+    );
   });
   await summary.write();
 }
