@@ -53600,13 +53600,12 @@ var lib_github = __nccwpck_require__(2867);
 
 async function printReport(report) {
   const summary = core.summary.addHeading("Summary");
-  summary.addDetails("Actor", report.actor);
-  summary.addDetails("SHA", report.sha);
-  summary.addDetails("Branch", report.ref);
-  summary.addDetails("Repository", report.repository.repo);
-  summary.addDetails("Total Complexity", report.totalComplexity);
-
-  summary.addHeading("Complexity Report");
+  summary.addRaw(`Actor: ${report.actor}`);
+  summary.addRaw(`SHA: ${report.sha}`);
+  summary.addRaw(`Branch: ${report.ref}`);
+  summary.addRaw(`Repository: ${report.repository.repo}`);
+  summary.addRaw(`Total Complexity: ${report.totalComplexity}`);
+  summary.addHeading("Complexity Report", 2);
   report.files.forEach((file) => {
     summary.addHeading("File", file.file);
     const mappedKeys = Object.keys(file.report).map(
@@ -53614,8 +53613,9 @@ async function printReport(report) {
     );
     const maxComplexity = Math.max(mappedKeys);
     const totalComplexity = mappedKeys.reduce((prev, cur) => +prev + +cur);
-    summary.addHeading("Max Complexity", maxComplexity);
-    summary.addHeading("Total File Complexity", totalComplexity);
+    summary.addRaw(`Max Complexity: ${maxComplexity}`);
+    summary.addRaw(`Total Complexity: ${totalComplexity}`);
+    summary.addSeparator();
   });
   await summary.write();
 }
