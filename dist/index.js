@@ -53595,7 +53595,32 @@ async function generateComplexityReport(directory) {
 
 // EXTERNAL MODULE: ./node_modules/@actions/github/lib/github.js
 var lib_github = __nccwpck_require__(2867);
+;// CONCATENATED MODULE: ./src/report.js
+
+
+async function printReport(report) {
+  const summary = core.summary.addHeading("Summary");
+  summary.addDetails("Actor", report.actor);
+  summary.addDetails("SHA", report.sha);
+  summary.addDetails("Branch", report.ref);
+  summary.addDetails("Repository", report.repository.repo);
+  summary.addDetails("Total Complexity", report.totalComplexity);
+
+  summary.addHeading("Complexity Report");
+  report.files.forEach((file) => {
+    summary.addHeading("File", file.file);
+    const mappedKeys = Object.keys(file.report).map(
+      (funcName) => file.report[funcName],
+    );
+    const maxComplexity = Math.max(mappedKeys);
+    const totalComplexity = mappedKeys.reduce((prev, cur) => +prev + +cur);
+    summary.addHeading("Max Complexity", maxComplexity);
+    summary.addHeading("Total File Complexity", totalComplexity);
+  });
+}
+
 ;// CONCATENATED MODULE: ./src/index.js
+
 
 
 
@@ -53724,6 +53749,7 @@ async function src_generateComplexityReport(
         ...baseMetrics,
       }
     : { ...prBase, ...baseMetrics };
+  printReport(analytics);
   const folder = "complexity-assessment";
   const filename = `${folder}/${lib_github.context.sha}-complexity.json`;
   await (0,promises_namespaceObject.mkdir)(folder);
