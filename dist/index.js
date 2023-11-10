@@ -53598,7 +53598,7 @@ var lib_github = __nccwpck_require__(2867);
 ;// CONCATENATED MODULE: ./src/report.js
 
 
-async function printReport(report) {
+function printReport(report) {
   const summary = core.summary.addHeading("Summary");
   summary.addDetails("Actor", report.actor);
   summary.addDetails("SHA", report.sha);

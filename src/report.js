@@ -1,6 +1,6 @@
 import * as core from "@actions/core";
 
-export async function printReport(report) {
+export function printReport(report) {
   const summary = core.summary.addHeading("Summary");
   summary.addDetails("Actor", report.actor);
   summary.addDetails("SHA", report.sha);
