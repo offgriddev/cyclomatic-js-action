@@ -32,16 +32,23 @@ export async function printReport(report) {
     );
     const maxComplexity = Math.max(...mappedKeys);
     const totalComplexity = mappedKeys.reduce((prev, cur) => +prev + +cur);
-    summary.addRaw(`Max Complexity: ${maxComplexity}`);
-    summary.addBreak();
-    summary.addRaw(`Total File Complexity: ${totalComplexity}`);
-    summary.addBreak();
-    Object.keys(file.report).forEach((funcName) => {
-      summary.addHeading(`Function: ${funcName}`, 4);
-      summary.addRaw(`Total Function Complexity: ${file.report[funcName]}`);
-      summary.addBreak();
-    });
-    summary.addSeparator();
+
+    summary.addTable([
+      [
+        { data: "File", header: true },
+        { data: "Max", header: true },
+        { data: "Total" },
+      ],
+      [file.file, maxComplexity, totalComplexity],
+    ]);
+    summary.addHeading(`Functions: ${funcName}`, 4);
+    summary.addTable([
+      [
+        { data: "Name", header: true },
+        { data: "Complexity", header: true },
+      ],
+      Object.keys(file.report).map((func) => [func, file.report[func]]),
+    ]);
   });
   await summary.write();
 }
