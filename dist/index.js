@@ -53600,16 +53600,38 @@ var lib_github = __nccwpck_require__(2867);
 
 async function printReport(report) {
   const summary = core.summary.addHeading("Summary");
-  summary.addRaw(`Actor: ${report.actor}\n`);
-  summary.addBreak();
-  summary.addRaw(`SHA: ${report.sha}\n`);
-  summary.addBreak();
-  summary.addRaw(`Branch: ${report.ref}\n`);
-  summary.addBreak();
-  summary.addRaw(`Repository: ${report.repository.repo}\n`);
-  summary.addBreak();
-  summary.addRaw(`Total Complexity: ${report.totalComplexity}\n`);
-  summary.addBreak();
+  summary.addTable([
+    [
+      {
+        data: "Actor",
+        header: true,
+      },
+      {
+        data: "SHA",
+        header: true,
+      },
+      {
+        data: "Branch",
+        header: true,
+      },
+      {
+        data: "Repository",
+        header: true,
+      },
+      {
+        data: "Total Complexity",
+        header: true,
+      },
+    ],
+    [
+      report.actor,
+      report.sha,
+      report.ref,
+      report.repositpory.repo,
+      report.totalComplexity,
+    ],
+  ]);
+
   summary.addHeading("Complexity Report", 2);
   report.files.forEach((file) => {
     summary.addHeading(`File: ${file.file}\n`, 3);
@@ -53618,11 +53640,10 @@ async function printReport(report) {
     );
     const maxComplexity = Math.max(...mappedKeys);
     const totalComplexity = mappedKeys.reduce((prev, cur) => +prev + +cur);
-    summary
-      .addRaw(`Max Complexity: ${maxComplexity}`)
-      .addEOL()
-      .addRaw(`Total File Complexity: ${totalComplexity}`)
-      .addEOL();
+    summary.addRaw(`Max Complexity: ${maxComplexity}`);
+    summary.addBreak();
+    summary.addRaw(`Total File Complexity: ${totalComplexity}`);
+    summary.addBreak();
     Object.keys(file.report).forEach((funcName) => {
       summary.addHeading(`Function: ${funcName}`, 4);
       summary.addRaw(`Total Function Complexity: ${file.report[funcName]}`);
