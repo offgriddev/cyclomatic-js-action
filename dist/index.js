@@ -53615,21 +53615,11 @@ async function printReport(report) {
         header: true,
       },
       {
-        data: "Repository",
-        header: true,
-      },
-      {
         data: "Total Complexity",
         header: true,
       },
     ],
-    [
-      report.actor,
-      report.sha,
-      report.ref,
-      report.repositpory.repo,
-      report.totalComplexity,
-    ],
+    [report.actor, report.sha, report.ref, report.totalComplexity],
   ]);
 
   summary.addHeading("Complexity Report", 2);
