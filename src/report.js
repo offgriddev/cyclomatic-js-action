@@ -22,7 +22,12 @@ export async function printReport(report) {
     const totalComplexity = mappedKeys.reduce((prev, cur) => +prev + +cur);
     summary.addRaw(`Max Complexity: ${maxComplexity}`);
     summary.addBreak();
-    summary.addRaw(`Total Complexity: ${totalComplexity}`);
+    summary.addRaw(`Total File Complexity: ${totalComplexity}`);
+    summary.addBreak();
+    Object.keys(file.report).forEach((funcName) => {
+      summary.addRaw(`Function: ${funcName} (${file.report[funcName]})`);
+      summary.addBreak();
+    });
     summary.addSeparator();
   });
   await summary.write();
