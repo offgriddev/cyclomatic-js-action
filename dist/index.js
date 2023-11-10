@@ -53616,8 +53616,7 @@ async function printReport(report) {
     const mappedKeys = Object.keys(file.report).map(
       (funcName) => +file.report[funcName],
     );
-    summary.addCodeBlock(mappedKeys);
-    const maxComplexity = Math.max(mappedKeys);
+    const maxComplexity = Math.max(...mappedKeys);
     const totalComplexity = mappedKeys.reduce((prev, cur) => +prev + +cur);
     summary.addRaw(`Max Complexity: ${maxComplexity}`);
     summary.addBreak();
