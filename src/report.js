@@ -21,7 +21,7 @@ export async function printReport(report) {
         header: true,
       },
     ],
-    [report.actor, report.sha, report.ref, report.totalComplexity],
+    [report.actor, report.sha, report.ref, report.totalComplexity.toString()],
   ]);
 
   summary.addHeading("Complexity Report", 2);
