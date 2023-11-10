@@ -4,6 +4,7 @@ import { readdir, writeFile, mkdir } from "fs/promises";
 import { calculateComplexity } from "cyclomatic-js";
 
 import { context, getOctokit } from "@actions/github";
+import { printReport } from "./report.js";
 
 export async function getPushDetails(githubToken, event) {
   if (!event.commits) return undefined;
@@ -126,6 +127,7 @@ export async function generateComplexityReport(
         ...baseMetrics,
       }
     : { ...prBase, ...baseMetrics };
+  printReport(analytics)
   const folder = "complexity-assessment";
   const filename = `${folder}/${context.sha}-complexity.json`;
   await mkdir(folder);
