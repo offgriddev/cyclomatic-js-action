@@ -25,7 +25,8 @@ export async function printReport(report) {
     summary.addRaw(`Total File Complexity: ${totalComplexity}`);
     summary.addBreak();
     Object.keys(file.report).forEach((funcName) => {
-      summary.addRaw(`Function: ${funcName} (${file.report[funcName]})`);
+      summary.addHeading(`Function: ${funcName}`, 4);
+      summary.addRaw(`Total Function Complexity: ${file.report[funcName]}`);
       summary.addBreak();
     });
     summary.addSeparator();
