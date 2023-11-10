@@ -127,7 +127,7 @@ export async function generateComplexityReport(
         ...baseMetrics,
       }
     : { ...prBase, ...baseMetrics };
-  printReport(analytics);
+  await printReport(analytics);
   const folder = "complexity-assessment";
   const filename = `${folder}/${context.sha}-complexity.json`;
   await mkdir(folder);

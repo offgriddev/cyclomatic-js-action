@@ -53598,7 +53598,7 @@ var lib_github = __nccwpck_require__(2867);
 ;// CONCATENATED MODULE: ./src/report.js
 
 
-function printReport(report) {
+async function printReport(report) {
   const summary = core.summary.addHeading("Summary");
   summary.addDetails("Actor", report.actor);
   summary.addDetails("SHA", report.sha);
@@ -53617,6 +53617,7 @@ function printReport(report) {
     summary.addHeading("Max Complexity", maxComplexity);
     summary.addHeading("Total File Complexity", totalComplexity);
   });
+  await summary.write();
 }
 
 ;// CONCATENATED MODULE: ./src/index.js
@@ -53749,7 +53750,7 @@ async function src_generateComplexityReport(
         ...baseMetrics,
       }
     : { ...prBase, ...baseMetrics };
-  printReport(analytics);
+  await printReport(analytics);
   const folder = "complexity-assessment";
   const filename = `${folder}/${lib_github.context.sha}-complexity.json`;
   await (0,promises_namespaceObject.mkdir)(folder);

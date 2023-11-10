@@ -1,6 +1,6 @@
 import * as core from "@actions/core";
 
-export function printReport(report) {
+export async function printReport(report) {
   const summary = core.summary.addHeading("Summary");
   summary.addDetails("Actor", report.actor);
   summary.addDetails("SHA", report.sha);
@@ -19,4 +19,5 @@ export function printReport(report) {
     summary.addHeading("Max Complexity", maxComplexity);
     summary.addHeading("Total File Complexity", totalComplexity);
   });
+  await summary.write();
 }
