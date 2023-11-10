@@ -53600,16 +53600,22 @@ var lib_github = __nccwpck_require__(2867);
 
 async function printReport(report) {
   const summary = core.summary.addHeading("Summary");
-  summary.addRaw(`Actor: ${report.actor}\n`);
-  summary.addBreak();
-  summary.addRaw(`SHA: ${report.sha}\n`);
-  summary.addBreak();
-  summary.addRaw(`Branch: ${report.ref}\n`);
-  summary.addBreak();
-  summary.addRaw(`Repository: ${report.repository.repo}\n`);
-  summary.addBreak();
+  summary
+    .addRaw(`Actor: ${report.actor}\n`)
+    .addEOL()
+    .addRaw(`SHA: ${report.sha}\n`)
+    .addEOL()
+    .addRaw(`Branch: ${report.ref}\n`)
+    .addEOL()
+    .addRaw(`Repository: ${report.repository.repo}\n`)
+    .addEOL();
+
+  summary.addList([
+    `Actor: ${report.actor}\n`,
+    `SHA: ${report.sha}\n`,
+    `Branch: ${report.ref}\n`,
+  ]);
   summary.addRaw(`Total Complexity: ${report.totalComplexity}\n`);
-  summary.addBreak();
   summary.addHeading("Complexity Report", 2);
   report.files.forEach((file) => {
     summary.addHeading(`File: ${file.file}\n`, 3);
