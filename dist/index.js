@@ -53649,6 +53649,7 @@ async function printReport(report) {
     Object.keys(file.report).forEach((func) =>
       functionRows.push([func, file.report[func].toString()]),
     );
+    summary.addTable(functionRows);
   });
   await summary.write();
 }
