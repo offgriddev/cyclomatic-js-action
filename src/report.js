@@ -21,7 +21,12 @@ export async function printReport(report) {
         header: true,
       },
     ],
-    [report.actor, report.sha, report.head, report.totalComplexity.toString()],
+    [
+      { data: report.actor },
+      { data: report.sha },
+      { data: report.head },
+      { data: report.totalComplexity.toString() },
+    ],
   ]);
 
   summary.addHeading("Complexity Report", 2);
@@ -39,7 +44,11 @@ export async function printReport(report) {
         { data: "Max", header: true },
         { data: "Total", header: true },
       ],
-      [file.file, maxComplexity.toString(), totalComplexity.toString()],
+      [
+        { data: file.file },
+        { data: maxComplexity.toString() },
+        { data: totalComplexity.toString() },
+      ],
     ]);
     summary.addHeading("Functions", 4);
     const functionRows = [
@@ -49,7 +58,10 @@ export async function printReport(report) {
       ],
     ];
     Object.keys(file.report).forEach((func) =>
-      functionRows.push([func, file.report[func].toString()]),
+      functionRows.push([
+        { data: func },
+        { data: file.report[func].toString() },
+      ]),
     );
     summary.addTable(functionRows);
   });
