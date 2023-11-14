@@ -53414,6 +53414,8 @@ globalThis.require = (0,external_node_module_namespaceObject.createRequire)(requ
 
 ;// CONCATENATED MODULE: external "fs/promises"
 const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs/promises");
+// EXTERNAL MODULE: external "fs"
+var external_fs_ = __nccwpck_require__(7147);
 // EXTERNAL MODULE: ./node_modules/abstract-syntax-tree/index.js
 var abstract_syntax_tree = __nccwpck_require__(4657);
 ;// CONCATENATED MODULE: ./node_modules/cyclomatic-js/src/calculate-complexity.js
@@ -53675,6 +53677,7 @@ async function printReport(report) {
 
 
 
+
 async function getPushDetails(githubToken, event) {
   if (!event.commits) return undefined;
 
@@ -53798,8 +53801,11 @@ async function src_generateComplexityReport(
     : { ...prBase, ...baseMetrics };
   await printReport(analytics);
   const folder = "complexity-assessment";
-  const filename = `${folder}/${lib_github.context.sha}-complexity.json`;
-  await (0,promises_namespaceObject.mkdir)(folder);
+  const filename = `${folder}/${analytics.repository.repo}/${lib_github.context.sha}-${analytics.actor}-complexity.json`;
+  core.info(`Report saved to: ${filename}`);
+  if (!(0,external_fs_.existsSync)(folder)) await (0,promises_namespaceObject.mkdir)(folder);
+  if (!(0,external_fs_.existsSync)(`${folder}/${analytics.repository.repo}`))
+    await (0,promises_namespaceObject.mkdir)(`${folder}/${analytics.repository.repo}`);
   await (0,promises_namespaceObject.writeFile)(filename, JSON.stringify(analytics, undefined, 2));
   return filename;
 }
