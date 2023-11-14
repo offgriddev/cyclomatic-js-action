@@ -1,6 +1,7 @@
 import * as core from "@actions/core";
 import "./require-polyfill.js";
 import { readdir, writeFile, mkdir } from "fs/promises";
+import { existsSync } from "fs";
 import { calculateComplexity } from "cyclomatic-js";
 
 import { context, getOctokit } from "@actions/github";
