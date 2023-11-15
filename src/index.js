@@ -8,9 +8,8 @@ import { context, getOctokit } from "@actions/github";
 import { printReport } from "./report.js";
 
 export async function getPushDetails(githubToken, event) {
-  core.info(JSON.stringify(event));
-  core.info(JSON.stringify(event.commits, undefined, 2));
-  if (!event.commits) return undefined;
+  core.info(JSON.stringify(event, undefined, 2));
+  // if (!event.commits) return undefined;
 
   const github = getOctokit(githubToken, context.repo);
   // push always originates from a PR
@@ -18,6 +17,7 @@ export async function getPushDetails(githubToken, event) {
     ...context.repo,
     state: "closed",
   });
+  core.info(JSON.stringify(prs, undefined, 2));
   for (const commit of event.commits) {
     const found = prs.data.find((pr) => pr.merge_commit_sha === commit.id);
     if (found)
