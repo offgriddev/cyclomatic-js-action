@@ -53679,6 +53679,7 @@ async function printReport(report) {
 
 
 async function getPushDetails(githubToken, event) {
+  core.info(JSON.stringify(event));
   core.info(JSON.stringify(event.commits, undefined, 2));
   if (!event.commits) return undefined;
 
