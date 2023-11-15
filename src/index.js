@@ -8,6 +8,7 @@ import { context, getOctokit } from "@actions/github";
 import { printReport } from "./report.js";
 
 export async function getPushDetails(githubToken, event) {
+  core.info(JSON.stringify(event.commits, undefined, 2));
   if (!event.commits) return undefined;
 
   const github = getOctokit(githubToken, context.repo);
