@@ -53814,7 +53814,7 @@ async function run() {
   try {
     const workingDirectory = core.getInput("working_directory");
     const githubToken = core.getInput("github_token");
-    const event = core.getInput("event");
+    const event = JSON.parse(core.getInput("event"));
     const filename = await src_generateComplexityReport(
       event,
       githubToken,
