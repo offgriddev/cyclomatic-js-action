@@ -53679,8 +53679,7 @@ async function printReport(report) {
 
 
 async function getPushDetails(githubToken, event) {
-  core.info(JSON.stringify(event, undefined, 2));
-  // if (!event.commits) return undefined;
+  if (!event.commits) return undefined;
 
   const github = (0,lib_github.getOctokit)(githubToken, lib_github.context.repo);
   // push always originates from a PR
@@ -53688,7 +53687,6 @@ async function getPushDetails(githubToken, event) {
     ...lib_github.context.repo,
     state: "closed",
   });
-  core.info(JSON.stringify(prs, undefined, 2));
   for (const commit of event.commits) {
     const found = prs.data.find((pr) => pr.merge_commit_sha === commit.id);
     if (found)
@@ -53817,7 +53815,6 @@ async function run() {
     const workingDirectory = core.getInput("working_directory");
     const githubToken = core.getInput("github_token");
     const event = JSON.parse(core.getInput("event"));
-    core.info();
     const filename = await src_generateComplexityReport(
       event,
       githubToken,
